@@ -2,8 +2,11 @@ package com.tutorial.tvvideoapp
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.leanback.app.RowsSupportFragment
 import androidx.leanback.widget.*
+import com.tutorial.tvvideoapp.models.Detail
+import com.tutorial.tvvideoapp.models.MoviesDataModel
 
 
 class ListFragment : RowsSupportFragment() {
@@ -11,7 +14,7 @@ class ListFragment : RowsSupportFragment() {
     private var rootAdapter: ArrayObjectAdapter =
         ArrayObjectAdapter(ListRowPresenter(FocusHighlight.ZOOM_FACTOR_MEDIUM))
 
-    private var itemClickHandler: ((details: Detail) -> Unit)? = null
+    private var itemSelectHandler: ((details: Detail) -> Unit)? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,7 +28,20 @@ class ListFragment : RowsSupportFragment() {
                 rowViewHolder: RowPresenter.ViewHolder?,
                 row: Row?
             ) {
-                itemClickHandler?.let { it(item as Detail) }
+                Toast.makeText(this@ListFragment.context, "item clicked", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        onItemViewSelectedListener = object: OnItemViewSelectedListener{
+            override fun onItemSelected(
+                itemViewHolder: Presenter.ViewHolder?,
+                item: Any?,
+                rowViewHolder: RowPresenter.ViewHolder?,
+                row: Row?
+            ) {
+                if(item is Detail){
+                    itemSelectHandler?.invoke(item)
+                }
             }
         }
 
@@ -49,7 +65,7 @@ class ListFragment : RowsSupportFragment() {
     }
 
     fun clickLogicSetter(logic: ((details: Detail) -> Unit)?){
-        itemClickHandler = logic
+        itemSelectHandler = logic
     }
 
 }

@@ -6,10 +6,11 @@ import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
+import com.tutorial.tvvideoapp.models.Detail
+import com.tutorial.tvvideoapp.models.MoviesDataModel
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
-import kotlin.math.log
 
 class MainActivity : FragmentActivity() {
 
