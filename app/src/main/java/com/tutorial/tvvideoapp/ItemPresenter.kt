@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.leanback.widget.Presenter
 import com.bumptech.glide.Glide
+import com.tutorial.tvvideoapp.models.Detail
 
 class ItemPresenter : Presenter() {
     override fun onCreateViewHolder(parent: ViewGroup?): ViewHolder {
