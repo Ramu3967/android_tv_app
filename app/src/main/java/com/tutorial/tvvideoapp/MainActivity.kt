@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
-import com.squareup.picasso.Picasso
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -52,7 +51,6 @@ class MainActivity : FragmentActivity() {
         txtSubTitle.text = "Language: ${movieDetails.original_language}"
         txtDescription.text = movieDetails.overview
         val url = "https://www.themoviedb.org/t/p/w500" + movieDetails.backdrop_path
-//        Glide.with(this).load(url).into(imgBanner)
-        Picasso.get().load(url).into(imgBanner)
+        Glide.with(this).load(url).into(imgBanner)
     }
 }
