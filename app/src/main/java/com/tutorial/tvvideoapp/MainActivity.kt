@@ -1,57 +1,75 @@
 package com.tutorial.tvvideoapp
 
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.KeyEvent
+import android.view.View
+import androidx.core.view.children
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import com.bumptech.glide.Glide
-import com.google.gson.Gson
-import com.tutorial.tvvideoapp.models.Detail
-import com.tutorial.tvvideoapp.models.MoviesDataModel
-import java.io.BufferedReader
-import java.io.InputStream
-import java.io.InputStreamReader
+import com.tutorial.tvvideoapp.databinding.ActivityMainBinding
+import com.tutorial.tvvideoapp.fragments.HomeFragment
+import com.tutorial.tvvideoapp.utils.UtilFunctions
 
-class MainActivity : FragmentActivity() {
+class MainActivity : FragmentActivity(), View.OnKeyListener {
 
-    lateinit var txtTitle: TextView
-    lateinit var txtSubTitle: TextView
-    lateinit var txtDescription: TextView
+    private var _binding: ActivityMainBinding? = null
 
-    lateinit var imgBanner: ImageView
-    lateinit var listFragment: ListFragment
+    private val binding get() = _binding!!
 
+    private var SIDE_MENU = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(_binding!!.root)
 
+        changeFragment(HomeFragment())
 
-        imgBanner = findViewById(R.id.img_banner)
-        txtTitle = findViewById(R.id.title)
-        txtSubTitle = findViewById(R.id.subtitle)
-        txtDescription = findViewById(R.id.description)
-
-        val listFragment = ListFragment()
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.list_fragment, listFragment)
-        transaction.commit()
-
-
-        val gson = Gson()
-        val i: InputStream = this.assets.open("movies.json")
-        val br = BufferedReader(InputStreamReader(i))
-        val dataList = gson.fromJson(br, MoviesDataModel::class.java)
-
-        listFragment.bindData(dataList)
-        listFragment.clickLogicSetter(logic = { updateBanner(it) })
-
+        binding.llSideMenu.children.forEach {
+            it.setOnKeyListener(this)
+        }
+//        binding.tvHomeSearch.setOnKeyListener(this)
+//        binding.tvHomeSearch.setOnKeyListener(this)
+//        binding.tvHomeSearch.setOnKeyListener(this)
     }
 
-    fun updateBanner(movieDetails: Detail){
-        txtTitle.text = movieDetails.original_title
-        txtSubTitle.text = "Language: ${movieDetails.original_language}"
-        txtDescription.text = movieDetails.overview
-        val url = "https://www.themoviedb.org/t/p/w500" + movieDetails.backdrop_path
-        Glide.with(this).load(url).into(imgBanner)
+    private fun changeFragment(fragment: Fragment) {
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.fl_container,fragment)
+        ft.commit()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+    override fun onKey(p0: View?, keyCode: Int, p2: KeyEvent?): Boolean {
+        when(keyCode){
+            KeyEvent.KEYCODE_DPAD_LEFT ->{
+                if(!SIDE_MENU) {
+                    openMenu()
+                    SIDE_MENU = true
+                }
+            }
+            KeyEvent.KEYCODE_DPAD_RIGHT ->{
+                if(SIDE_MENU){
+                    SIDE_MENU = false
+                    closeMenu()
+                }
+            }
+        }
+        return false
+    }
+
+
+    private fun openMenu() {
+        binding.bflNavbar.requestLayout()
+        binding.bflNavbar.layoutParams.width = UtilFunctions.getWidthInPercent(this,30)
+    }
+
+    private fun closeMenu() {
+        binding.bflNavbar.requestLayout()
+        binding.bflNavbar.layoutParams.width = UtilFunctions.getWidthInPercent(this,8)
+    }
+
 }
