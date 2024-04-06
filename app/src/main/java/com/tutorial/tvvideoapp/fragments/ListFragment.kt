@@ -1,10 +1,11 @@
-package com.tutorial.tvvideoapp
+package com.tutorial.tvvideoapp.fragments
 
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.leanback.app.RowsSupportFragment
 import androidx.leanback.widget.*
+import com.tutorial.tvvideoapp.ItemPresenter
 import com.tutorial.tvvideoapp.models.Detail
 import com.tutorial.tvvideoapp.models.MoviesDataModel
 

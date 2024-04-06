@@ -7,6 +7,8 @@ import android.widget.ImageView
 import androidx.leanback.widget.Presenter
 import com.bumptech.glide.Glide
 import com.tutorial.tvvideoapp.models.Detail
+import com.tutorial.tvvideoapp.utils.UtilFunctions.getHeightInPercent
+import com.tutorial.tvvideoapp.utils.UtilFunctions.getWidthInPercent
 
 class ItemPresenter : Presenter() {
     override fun onCreateViewHolder(parent: ViewGroup?): ViewHolder {
@@ -22,15 +24,7 @@ class ItemPresenter : Presenter() {
 
     }
 
-    fun getWidthInPercent(context: Context, percent: Int): Int {
-        val width = context.resources.displayMetrics.widthPixels ?: 0
-        return (width * percent) / 100
-    }
 
-    fun getHeightInPercent(context: Context, percent: Int): Int {
-        val width = context.resources.displayMetrics.heightPixels ?: 0
-        return (width * percent) / 100
-    }
 
 
     override fun onBindViewHolder(viewHolder: ViewHolder?, item: Any?) {
