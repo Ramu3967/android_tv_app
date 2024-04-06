@@ -1,10 +1,12 @@
 package com.tutorial.tvvideoapp.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.leanback.app.RowsSupportFragment
 import androidx.leanback.widget.*
+import com.tutorial.tvvideoapp.DetailsActivity
 import com.tutorial.tvvideoapp.ItemPresenter
 import com.tutorial.tvvideoapp.models.Detail
 import com.tutorial.tvvideoapp.models.MoviesDataModel
@@ -29,7 +31,8 @@ class ListFragment : RowsSupportFragment() {
                 rowViewHolder: RowPresenter.ViewHolder?,
                 row: Row?
             ) {
-                Toast.makeText(this@ListFragment.context, "item clicked", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this@ListFragment.context, "item clicked", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(requireContext(),DetailsActivity::class.java))
             }
         }
 
