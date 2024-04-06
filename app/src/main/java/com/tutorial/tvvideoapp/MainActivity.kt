@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.tutorial.tvvideoapp.databinding.ActivityMainBinding
 import com.tutorial.tvvideoapp.fragments.HomeFragment
+import com.tutorial.tvvideoapp.fragments.ListFragment
+import com.tutorial.tvvideoapp.fragments.SearchFragment
 import com.tutorial.tvvideoapp.utils.UtilFunctions
 
 class MainActivity : FragmentActivity(), View.OnKeyListener {
@@ -38,7 +40,7 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
         _binding = null
     }
 
-    override fun onKey(p0: View?, keyCode: Int, p2: KeyEvent?): Boolean {
+    override fun onKey(view: View?, keyCode: Int, p2: KeyEvent?): Boolean {
         when(keyCode){
             KeyEvent.KEYCODE_DPAD_LEFT ->{
                 if(!SIDE_MENU) {
@@ -50,6 +52,14 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
                 if(SIDE_MENU){
                     SIDE_MENU = false
                     closeMenu()
+                }
+            }
+            KeyEvent.KEYCODE_DPAD_CENTER ->{
+                view?.let {
+                    when(it.id){
+                        R.id.btn_home -> changeFragment(HomeFragment())
+                        R.id.btn_search -> changeFragment(SearchFragment())
+                    }
                 }
             }
         }
