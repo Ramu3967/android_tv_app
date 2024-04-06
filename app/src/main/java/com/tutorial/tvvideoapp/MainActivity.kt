@@ -24,12 +24,7 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
 
         changeFragment(HomeFragment())
 
-        binding.llSideMenu.children.forEach {
-            it.setOnKeyListener(this)
-        }
-//        binding.tvHomeSearch.setOnKeyListener(this)
-//        binding.tvHomeSearch.setOnKeyListener(this)
-//        binding.tvHomeSearch.setOnKeyListener(this)
+        binding.llSideMenu.children.forEach {  it.setOnKeyListener(this)  }
     }
 
     private fun changeFragment(fragment: Fragment) {
@@ -64,12 +59,12 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
 
     private fun openMenu() {
         binding.bflNavbar.requestLayout()
-        binding.bflNavbar.layoutParams.width = UtilFunctions.getWidthInPercent(this,30)
+        binding.bflNavbar.layoutParams.width = UtilFunctions.getWidthInPercent(this,16)
     }
 
     private fun closeMenu() {
         binding.bflNavbar.requestLayout()
-        binding.bflNavbar.layoutParams.width = UtilFunctions.getWidthInPercent(this,8)
+        binding.bflNavbar.layoutParams.width = UtilFunctions.getWidthInPercent(this,5)
     }
 
 }
