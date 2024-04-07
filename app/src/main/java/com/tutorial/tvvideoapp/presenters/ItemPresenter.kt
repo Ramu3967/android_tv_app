@@ -1,11 +1,11 @@
-package com.tutorial.tvvideoapp
+package com.tutorial.tvvideoapp.presenters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.leanback.widget.Presenter
 import com.bumptech.glide.Glide
+import com.tutorial.tvvideoapp.R
 import com.tutorial.tvvideoapp.models.Detail
 import com.tutorial.tvvideoapp.utils.UtilFunctions.getHeightInPercent
 import com.tutorial.tvvideoapp.utils.UtilFunctions.getWidthInPercent
@@ -23,8 +23,6 @@ class ItemPresenter : Presenter() {
         return ViewHolder(view)
 
     }
-
-
 
 
     override fun onBindViewHolder(viewHolder: ViewHolder?, item: Any?) {
