@@ -17,6 +17,7 @@ import com.tutorial.tvvideoapp.databinding.ActivityDetailsBinding
 import com.tutorial.tvvideoapp.models.moviedetails.MovieDetailsDataModel
 import com.tutorial.tvvideoapp.utils.UtilFunctions.convertToHoursMinutes
 import com.tutorial.tvvideoapp.utils.UtilFunctions.getImageUrl
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class DetailsActivity : FragmentActivity() {
@@ -41,8 +42,9 @@ class DetailsActivity : FragmentActivity() {
         val viewModel: MovieDetailsViewModel by viewModels {viewModelFactory }
 
         // make the api call
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             viewModel.getMovieDetailsById(movieId)
+            viewModel.getMovieCastDetailsById(movieId)
         }
 
         viewModel.movieDetailsLV.observe(this){
@@ -54,10 +56,10 @@ class DetailsActivity : FragmentActivity() {
             }
         }
 
-//        viewModel.movieCastDetailsLV.observe(this){
-//            // bind data to rowsupport frag
-//            castFragment.bindCastData(it)
-//        }
+        viewModel.movieCastDetailsLV.observe(this){
+            // bind data to rowsupport frag
+            castFragment.bindCastData(it)
+        }
 
 
 
@@ -73,7 +75,7 @@ class DetailsActivity : FragmentActivity() {
         val runtime = convertToHoursMinutes(details.runtime).let {
             "${it.first}h ${it.second}m"
         }
-        val rating = String.format("%.2f",details.vote_average)
+        val rating = String.format("%.1f",details.vote_average)
         val releasedYear = details.release_date.substring(0,4)
         return "IMDB:$rating $releasedYear $runtime"
     }
